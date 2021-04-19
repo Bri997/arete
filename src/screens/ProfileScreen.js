@@ -7,9 +7,31 @@ import {
 } from 'react-native'
 import { AuthContext } from '../navigation/AuthProvider'
 import { Block, Text, theme, Icon } from 'galio-framework'
+import FormInput from '../components/FormInput'
+import FormButton from '../components/FormButton'
+import Kudos from '../components/Kudos'
+import Button from 'react-native-paper'
+
+const user = {
+  fullName: 'Brian Musial',
+  location: 'Chicago',
+  state: 'IL',
+  about: 'I do web development. Website and App design and development',
+  memberYear: 2020,
+  links: [
+    { url: 'MyWebsite.com', key: '1' },
+    { url: 'linkedIn.com', key: '2' },
+    { url: 'instagram.com', key: '3' },
+  ],
+  kudos: [
+    { text: 'You are the best', from: 'Jess', key: '1' },
+    { text: 'You are cool', from: 'Coolio', key: '1' },
+  ],
+}
 
 const { width } = Dimensions.get('screen')
 const image = { uri: 'https://chatapps3.s3.amazonaws.com/Headshot.jpg' }
+
 export default function ProfileScreen({ navigation }) {
   const [kudos, setKudos] = useState(7)
 
@@ -23,7 +45,7 @@ export default function ProfileScreen({ navigation }) {
         <Block flex style={styles.profileDetails}>
           <Block style={styles.profileTexts}>
             <Text color='white' size={28} style={styles.profileName}>
-              Brian Musial
+              {user.fullName}
             </Text>
 
             <Block row space='between'>
@@ -36,8 +58,8 @@ export default function ProfileScreen({ navigation }) {
                     family='font-awesome'
                     color={'#ffc107'}
                     size={16}
-                  />
-                  {`  `}Chicago, IL.
+                  />{' '}
+                  {user.location} {user.state}
                 </Text>
               </Block>
             </Block>
@@ -52,7 +74,7 @@ export default function ProfileScreen({ navigation }) {
                 <Icon
                   name='handshake-o'
                   family='font-awesome'
-                  color={'#ffc107'}
+                  color={theme.COLORS.YELLOW}
                   size={32}
                 />
 
@@ -73,7 +95,8 @@ export default function ProfileScreen({ navigation }) {
               </Block>
               <Block middle style={styles.years}>
                 <Text size={13} color='black'>
-                  1st Year Member
+                  Member Since{'\n'}
+                  {user.memberYear}
                 </Text>
               </Block>
             </Block>
@@ -95,11 +118,7 @@ export default function ProfileScreen({ navigation }) {
                 paddingLeft: 30,
               }}
             >
-              <Text>
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iam'
-                'contemni non poteris. Aliter autem vobis placet. Quod non'
-                faceret, si in voluptate summum bonum poneret. Duo Reges:
-              </Text>
+              <Text>{user.about}</Text>
             </Block>
 
             <Block
@@ -122,10 +141,9 @@ export default function ProfileScreen({ navigation }) {
                 paddingRight: 30,
               }}
             >
-              <Text>Website</Text>
-              <Text>Facebook</Text>
-              <Text>Instagram</Text>
-              <Text>LinkedIn</Text>
+              {user.links.map((link) => (
+                <Text key={link.key}>{link.url}</Text>
+              ))}
             </Block>
             <Block
               style={{
@@ -139,12 +157,18 @@ export default function ProfileScreen({ navigation }) {
               <Icon
                 name='handshake-o'
                 family='font-awesome'
-                color={'#ffc107'}
+                color={theme.COLORS.YELLOW}
                 size={32}
               />
               <Text muted size={13}>
                 +1
               </Text>
+              <Kudos
+                labelName={'Say something nice '}
+                modeValue={'outlined'}
+                value={kudos}
+                onChangeText={(userKudosInput) => setKudos(userKudosInput)}
+              ></Kudos>
             </Block>
           </ScrollView>
         </Block>
@@ -194,7 +218,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     marginRight: 8,
     borderRadius: 4,
-    height: 35,
+    height: 65,
     width: 90,
   },
   options: {
@@ -212,5 +236,8 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.2,
     zIndex: 2,
+  },
+  multiInput: {
+    height: 50,
   },
 })

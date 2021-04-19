@@ -4,15 +4,16 @@ import { Button } from 'react-native-paper'
 
 const { width, height } = Dimensions.get('screen')
 
-export default function FormButton({ title, modeValue, ...rest }) {
+export default function KudosButton({ title, modeValue, ...rest }) {
   return (
     <Button
       mode={modeValue}
       {...rest}
       style={styles.button}
       contentStyle={styles.buttonContainer}
+      onPress={() => console.log('Kudos Pressed')}
     >
-      {title}
+      Submit
     </Button>
   )
 }

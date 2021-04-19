@@ -20,8 +20,9 @@ export default {
     BORDER_COLOR: '#E7E7E7',
     BLOCK: '#E7E7E7',
     CAPTION: '#4A4A4A',
+    YELLOW: '#FFC107',
   },
   SIZES: {
     BLOCK_SHADOW_RADIUS: 2,
-  }
-};
+  },
+}
